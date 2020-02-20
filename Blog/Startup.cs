@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore.SqlServer;
 using Microsoft.EntityFrameworkCore;
 using Blog.Data.Repository;
 using Microsoft.AspNetCore.Identity;
+using Blog.Data.FileManager;
 
 namespace Blog
 {
@@ -43,6 +44,7 @@ namespace Blog
                 options.LoginPath = "/Auth/Login";
             });
             services.AddTransient<IRepository, Repository>();
+            services.AddTransient<IFileManager, FileManager>();
             services.AddMvc();
         }
 
@@ -53,10 +55,12 @@ namespace Blog
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            
             app.UseRouting();
+            
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseStaticFiles();       
             app.UseEndpoints(endpoints =>
             {
                 //endpoints.MapGet("/", async context =>
